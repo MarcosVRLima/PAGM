@@ -1,12 +1,12 @@
 from modules.getEdgeAndNodes import getEdgeAndNodes
-from modules.primAlgorithm import prim
+from modules.primsAlgorithm import prim
 
 import matplotlib.pyplot as plt
 import networkx as nx
 
 def criar_grafo(dados):
     # Crie um objeto de grafo direcionado
-    grafo = nx.DiGraph()
+    grafo = nx.Graph()
 
     # Adicione os nós e as conexões com os pesos ao grafo
     for no_pai, conexoes in dados.items():
@@ -18,17 +18,18 @@ def criar_grafo(dados):
 
 grafo = criar_grafo(getEdgeAndNodes('./AGM/DMXA/dmxa0296.stp'))
 
-agm = prim(grafo)
-
 # print(grafo)
 
-# # Defina a posição dos nós (opcional)
+agm = prim(grafo)
+
+# Defina a posição dos nós (opcional)
 pos = nx.spring_layout(agm)
 
-# # Desenhe o grafo
+# Desenhe o grafo
 nx.draw(agm, pos, with_labels=True, node_size=500, node_color='lightblue', font_size=12, font_color='black', font_weight='bold', arrows=True)
 
-# # Exiba o gráfico
+# Exiba o gráfico
 plt.show()
 
-plt.savefig("agm.png")  # Salve o gráfico como um arquivo PNG
+# Salve o gráfico como um arquivo PNG
+# plt.savefig("agm.png")  

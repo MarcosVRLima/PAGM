@@ -3,7 +3,7 @@ def getEdgeAndNodes(nomeArquivo):
     grafo = {}
 
     # Nome do arquivo
-    #nomeArquivo = './AGM/DMXA/dmxa0296.stp'
+    # nomeArquivo = './AGM/DMXA/dmxa0296.stp'
 
     with open(nomeArquivo, 'r') as arquivo:
         for linha in arquivo:
@@ -18,12 +18,15 @@ def getEdgeAndNodes(nomeArquivo):
                 if int(no2) in grafo:
                     grafo[int(no2)] = []
 
-
-
     return grafo
-                
+               
 # Exemplo de como acessar o dicionário
 # grafo = getEdgeAndNodes('./AGM/DMXA/dmxa0296.stp')
+# for node in grafo:
+#     print(node)
+#     for targets in grafo[node]:
+#         print(f"   {targets} ")
+
 
 # print(f"{grafo}\n\n {len(grafo)}")
 
