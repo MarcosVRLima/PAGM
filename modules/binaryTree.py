@@ -1,76 +1,71 @@
 class No:
-    def __init__(self, valor, peso=0):
+    def __init__(self, valor, vertice):
         self.valor = valor
-        self.peso = peso
+        self.vertice = vertice
+        self.visitado = False
         self.esquerda = None
         self.direita = None
 
 class ArvoreBinaria:
     def __init__(self):
         self.raiz = None
-        
-    def inserir(self, valor, valorFilho=0, peso=0 ):
-        if self.raiz == None:
-            self.raiz = No(valor, 0)
-        
-        noatual = self.buscar(valor)
-        if noatual:
-            if noatual.esquerda == None:
-                noatual.esquerda = No(valorFilho, peso)
-            elif noatual.direita == None:
-                noatual.direita = No(valorFilho, peso)
-            else:
-                print('nao tem mais como adicionar')
-                print(f"{noatual.valor} {noatual.esquerda.valor} {noatual.direita.valor}")
+
+    def inserir(self, valor, vertice):
+        if self.raiz is None:
+            self.raiz = No(valor, vertice)
         else:
-            print(f"este no nao se liga com ninguem {valor} {valorFilho}")
-            
-    def buscar(self, valor, no=None):
-        if no is None:
-            no = self.raiz
+            self._inserir_recursivamente(self.raiz, valor, vertice)
 
-        if no is None:
-            return None  # Árvore vazia
+    def _inserir_recursivamente(self, no_atual, valor, vertice): 
+        if valor >= no_atual.valor:
+            if no_atual.direita is None:
+                no_atual.direita = No(valor, vertice)
+            else:
+                self._inserir_recursivamente(no_atual.direita, valor, vertice)
+        elif valor <= no_atual.valor:
+            if no_atual.esquerda is None:
+                no_atual.esquerda = No(valor, vertice)
+            else:
+                self._inserir_recursivamente(no_atual.esquerda, valor, vertice)
 
-        if no.valor == valor:
-            return no  # Valor encontrado
+    def buscar(self, valor):
+        return self._buscar_recursivamente(self.raiz, valor)
 
-        # Recursivamente busca nos filhos esquerdo e direito, se existirem
-        if no.esquerda:
-            resultado_esquerda = self.buscar(valor, no.esquerda)
-            if resultado_esquerda:
-                return resultado_esquerda  # Encontrado na subárvore esquerda
-
-        if no.direita:
-            resultado_direita = self.buscar(valor, no.direita)
-            if resultado_direita:
-                return resultado_direita  # Encontrado na subárvore direita
-
-        return None  # Valor não encontrado na árvore
+    def _buscar_recursivamente(self, no_atual, valor):
+        if no_atual is None:
+            return None  # Valor não encontrado na árvore
+        if valor == no_atual.valor:
+            return no_atual  # Valor encontrado
+        if valor < no_atual.valor:
+            return self._buscar_recursivamente(no_atual.esquerda, valor)
+        return self._buscar_recursivamente(no_atual.direita, valor)
 
     def em_ordem(self):
         return self._em_ordem_recursivamente(self.raiz)
 
     def _em_ordem_recursivamente(self, no):
         if no is not None:
+            print(f"{no.valor} {no.vertice}")
             self._em_ordem_recursivamente(no.esquerda)
-            print(f"Valor: {no.valor}, Peso: {no.peso}")
             self._em_ordem_recursivamente(no.direita)
 
-
 # Exemplo de uso:
+arvore = ArvoreBinaria()
+arvore.inserir(0, 1)
+arvore.inserir(5, 14)
+arvore.inserir(13, 15)
+arvore.inserir(13, 27)
+arvore.inserir(13, 28)
+arvore.inserir(5, 40)
+arvore.inserir(5, 41)
+arvore.inserir(0, 50)
 
-# arvore = ArvoreBinaria()
-# arvore.inserir(1, 2, 5) # (VALOR, VALORfilho, PESO)
-# arvore.inserir(2, 3, 5)
+print("Em ordem:")
+arvore.em_ordem()
 
-# print("Em ordem:")
-# arvore.em_ordem()
-
-# valor_buscado = 30
-# no_encontrado = arvore.buscar(valor_buscado)
-# if no_encontrado:
-#     print(f"Valor {valor_buscado} encontrado na árvore. Peso: {no_encontrado.peso}")
-# else:
-#     print(f"Valor {valor_buscado} não encontrado na árvore.")
- 
+valor_buscado = 5
+no_encontrado = arvore.buscar(valor_buscado)
+if no_encontrado:
+    print(f"\nValor {valor_buscado} encontrado na árvore.")
+else:
+    print(f"\nValor {valor_buscado} não encontrado na árvore.")

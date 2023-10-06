@@ -22,11 +22,6 @@ def getEdgeAndNodes(nomeArquivo):
                
 # Exemplo de como acessar o dicionário
 # grafo = getEdgeAndNodes('./AGM/DMXA/dmxa0296.stp')
-# for node in grafo:
-#     print(node)
-#     for targets in grafo[node]:
-#         print(f"   {targets} ")
-
 
 # print(f"{grafo}\n\n {len(grafo)}")
 
